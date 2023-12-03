@@ -1,68 +1,92 @@
+use std::{iter::Sum, str::FromStr};
+
 pub fn exec() -> () {
   let input = include_str!("input1.txt");
   let output = process(input);
   println!("Day 02 - Part 01 - {output}");
 }
 
-#[derive(Debug)]
+struct Game {
+  id: usize,
+  rounds: Vec<GameRound>,
+}
+
+impl FromStr for Game {
+  type Err = &'static str;
+
+  fn from_str(s: &str) -> Result<Self, Self::Err> {
+    let line = s.trim();
+    let (metadata, game_line) = line.split_once(':').ok_or("Invalid game")?;
+    let (_, id) = metadata.split_once(' ').ok_or("Invalid game id")?;
+    let rounds = game_line
+      .split(';')
+      .map(|round| GameRound::from_str(round))
+      .collect::<Result<Vec<GameRound>, &'static str>>()?;
+    Ok(Game {
+      id: id.parse().map_err(|_| "Game Id not a number")?,
+      rounds,
+    })
+  }
+}
+
+#[derive(Default)]
 struct GameRound {
-  blue: usize,
-  green: usize,
   red: usize,
+  green: usize,
+  blue: usize,
 }
 
-impl GameRound {
-  pub const fn new() -> Self {
-    Self {
-      blue: 0,
-      green: 0,
-      red: 0,
-    }
+impl FromStr for GameRound {
+  type Err = &'static str;
+
+  fn from_str(s: &str) -> Result<Self, Self::Err> {
+    Ok(
+      s.split(",")
+        .filter_map(|hand| {
+          let (amount, color) = hand.trim().split_once(' ')?;
+          let amount = amount.parse::<usize>().ok()?;
+          match color {
+            "red" => Some(GameRound {
+              red: amount,
+              ..GameRound::default()
+            }),
+            "green" => Some(GameRound {
+              green: amount,
+              ..GameRound::default()
+            }),
+            "blue" => Some(GameRound {
+              blue: amount,
+              ..GameRound::default()
+            }),
+            _ => None,
+          }
+        })
+        .sum(),
+    )
   }
 }
 
-fn get_rounds(line: &str) -> Vec<GameRound> {
-  let mut rounds: Vec<GameRound> = vec![];
-  for round in line.split(";") {
-    let mut game_round = GameRound::new();
-    for hand in round.split(",") {
-      let hand_info: Vec<&str> = hand.trim().split_whitespace().collect();
-      let amount = hand_info[0].parse::<usize>().unwrap();
-      let color = hand_info[1];
-      match color {
-        "red" => game_round.red = amount,
-        "green" => game_round.green = amount,
-        "blue" => game_round.blue = amount,
-        _ => panic!("unknow color: {color}"),
-      }
-    }
-    rounds.push(game_round);
+impl Sum for GameRound {
+  fn sum<I: Iterator<Item = Self>>(iter: I) -> Self {
+    iter.fold(GameRound::default(), |sum, game| GameRound {
+      red: sum.red + game.red,
+      green: sum.green + game.green,
+      blue: sum.blue + game.blue,
+    })
   }
-  rounds
-}
-
-fn valid_rounds(rounds: Vec<GameRound>) -> bool {
-  rounds
-    .iter()
-    .all(|round| !(round.red > 12 || round.green > 13 || round.blue > 14))
 }
 
 fn process(input: &str) -> usize {
   input
     .lines()
-    .filter_map(|line| {
-      let line = line.trim();
-      let metadata_position = line.find(":").unwrap();
-      let game_line = &line[(metadata_position + 1)..];
-      let rounds = get_rounds(game_line);
-      let valid = valid_rounds(rounds);
-      if valid {
-        let id = (&line[5..metadata_position]).parse::<usize>().unwrap();
-        Some(id)
-      } else {
-        None
-      }
+    .filter_map(|line| Game::from_str(line).ok())
+    .filter(|game| {
+      game
+        .rounds
+        .iter()
+        .all(|round| round.red <= 12 && round.green <= 13 && round.blue <= 14)
     })
+    .map(|game| game.id)
     .sum::<usize>()
 }
 

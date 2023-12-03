@@ -1,7 +1,7 @@
 pub fn exec() -> () {
-  let input = include_str!("input1.txt");
+  let input = include_str!("input2.txt");
   let output = process(input);
-  println!("Day 02 - Part 0 - {output}");
+  println!("Day 02 - Part 02 - {output}");
 }
 
 #[derive(Debug)]
