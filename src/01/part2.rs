@@ -4,7 +4,7 @@ pub fn exec() {
   println!("Day 01 - Part 02 - {output}");
 }
 
-fn process(input: &str) -> i32 {
+fn process(input: &str) -> usize {
   input
     .lines()
     .map(|line| {
@@ -32,7 +32,7 @@ fn process(input: &str) -> i32 {
       let digits = line.chars().filter(|n| n.is_digit(10)).collect::<Vec<_>>();
       let first = digits.first()?;
       let last = digits.last()?;
-      format!("{first}{last}").parse::<i32>().ok()
+      format!("{first}{last}").parse::<usize>().ok()
     })
     .sum()
 }
@@ -44,12 +44,12 @@ mod testsday01part02 {
   #[test]
   pub fn example() {
     let input = "two1nine
-    eightwothree
-    abcone2threexyz
-    xtwone3four
-    4nineeightseven2
-    zoneight234
-    7pqrstsixteen";
+eightwothree
+abcone2threexyz
+xtwone3four
+4nineeightseven2
+zoneight234
+7pqrstsixteen";
     assert_eq!(process(input), 281)
   }
 }
