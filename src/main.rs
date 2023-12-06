@@ -5,4 +5,6 @@ fn main() -> () {
   mylib::day02part02::exec();
   mylib::day03part01::exec();
   mylib::day03part02::exec();
+  mylib::day04part01::exec();
+  mylib::day04part02::exec();
 }
