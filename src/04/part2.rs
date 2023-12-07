@@ -94,7 +94,7 @@ fn process(input: &str) -> usize {
 }
 
 #[cfg(test)]
-mod testsday04part01 {
+mod testsday04part02 {
   use super::*;
 
   #[test]
