@@ -74,7 +74,7 @@ fn calc_possibilities(race: &Race) -> usize {
 
   loop {
     from_bottom = simulate_race(count, race.time) > race.distance;
-    let from_top = simulate_race(max_dist_point - count, race.time) < race.distance;
+    let from_top = simulate_race(max_dist_point - count, race.time) <= race.distance;
     if from_top || from_bottom {
       break;
     }
