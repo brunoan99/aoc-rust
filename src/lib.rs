@@ -51,3 +51,12 @@ pub use day06part01::*;
 #[path = "06/part2.rs"]
 pub mod day06part02;
 pub use day06part02::*;
+
+// --- Day 07 ---
+#[path = "07/part1.rs"]
+pub mod day07part01;
+pub use day07part01::*;
+
+#[path = "07/part2.rs"]
+pub mod day07part02;
+pub use day07part02::*;
