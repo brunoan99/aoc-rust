@@ -20,4 +20,7 @@ fn main() -> () {
   mylib::day07part01::exec();
   mylib::day07part02::exec();
   println!("");
+  mylib::day08part01::exec();
+  mylib::day08part02::exec();
+  println!("");
 }
