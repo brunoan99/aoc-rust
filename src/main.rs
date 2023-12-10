@@ -26,4 +26,7 @@ fn main() -> () {
   mylib::day09part01::exec();
   mylib::day09part02::exec();
   println!("");
+  mylib::day10part01::exec();
+  mylib::day10part02::exec();
+  println!("");
 }
