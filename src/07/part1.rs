@@ -7,7 +7,7 @@ pub fn exec() -> () {
 }
 
 #[derive(Debug, PartialEq, PartialOrd, Clone, Eq, Ord, Hash)]
-pub enum Card {
+enum Card {
   Two,
   Three,
   Four,
@@ -44,50 +44,6 @@ impl From<char> for Card {
   }
 }
 
-#[derive(Debug, Clone, PartialEq)]
-struct Hand {
-  cards: [Card; 5],
-  bid: usize,
-}
-
-impl From<&str> for Hand {
-  fn from(value: &str) -> Self {
-    let (cards, score) = value.trim().split_once(" ").unwrap();
-    let cards: [Card; 5] = cards
-      .trim()
-      .chars()
-      .into_iter()
-      .map(|c| Card::from(c))
-      .collect::<Vec<Card>>()
-      .try_into()
-      .unwrap();
-
-    let score = score.parse::<usize>().unwrap();
-
-    Hand { cards, bid: score }
-  }
-}
-
-struct HandMap {
-  map: HashMap<Card, usize>,
-}
-
-impl From<&Hand> for HandMap {
-  fn from(value: &Hand) -> Self {
-    let mut map: HashMap<Card, usize> = HashMap::with_capacity(5);
-
-    for card in value.cards.iter() {
-      let new_value = match map.get(card) {
-        Some(value) => value + 1,
-        None => 1,
-      };
-      map.insert(card.clone(), new_value);
-    }
-
-    HandMap { map }
-  }
-}
-
 #[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord)]
 enum HandStrength {
   HighCard,
@@ -100,15 +56,36 @@ enum HandStrength {
 }
 
 #[derive(Debug, Clone, PartialEq)]
-struct HandEvaluated {
+struct Hand {
   cards: [Card; 5],
   bid: usize,
   strength: HandStrength,
 }
 
-impl From<Hand> for HandEvaluated {
-  fn from(value: Hand) -> Self {
-    let map = HandMap::from(&value).map;
+impl From<&str> for Hand {
+  fn from(value: &str) -> Self {
+    let (cards, bid) = value.trim().split_once(" ").unwrap();
+    let cards: [Card; 5] = cards
+      .trim()
+      .chars()
+      .into_iter()
+      .map(|c| Card::from(c))
+      .collect::<Vec<Card>>()
+      .try_into()
+      .unwrap();
+
+    let bid = bid.parse::<usize>().unwrap();
+
+    let mut map: HashMap<Card, usize> = HashMap::with_capacity(5);
+
+    for card in cards.iter() {
+      match map.get_mut(card) {
+        Some(value) => *value = *value + 1,
+        None => {
+          map.insert(card.clone(), 1);
+        }
+      };
+    }
     let mut tally: Vec<usize> = map.values().copied().collect();
     tally.sort_by(|x, y| y.cmp(x));
 
@@ -123,15 +100,14 @@ impl From<Hand> for HandEvaluated {
       _ => panic!("Unknow Strength"),
     };
 
-    HandEvaluated {
-      cards: value.cards,
-      bid: value.bid,
+    Hand {
+      cards,
+      bid,
       strength,
     }
   }
 }
 
-#[derive(Debug)]
 struct Play {
   plays: Vec<Hand>,
 }
@@ -143,23 +119,7 @@ impl From<&str> for Play {
   }
 }
 
-#[derive(Debug)]
-struct PlayComputed {
-  plays: Vec<HandEvaluated>,
-}
-
-impl From<Play> for PlayComputed {
-  fn from(value: Play) -> Self {
-    let plays = value
-      .plays
-      .into_iter()
-      .map(|hand| HandEvaluated::from(hand))
-      .collect();
-    Self { plays }
-  }
-}
-
-impl PlayComputed {
+impl Play {
   pub fn sort(&mut self) {
     self
       .plays
@@ -168,10 +128,9 @@ impl PlayComputed {
 }
 
 fn process(input: &str) -> usize {
-  let play = Play::from(input);
-  let mut comp_play = PlayComputed::from(play);
-  comp_play.sort();
-  comp_play
+  let mut play = Play::from(input);
+  play.sort();
+  play
     .plays
     .iter()
     .enumerate()
