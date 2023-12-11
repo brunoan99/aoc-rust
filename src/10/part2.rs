@@ -1,5 +1,3 @@
-use std::collections::{HashMap, VecDeque};
-
 pub fn exec() -> () {
   let input = include_str!("input.txt");
   let output = process(input);
@@ -30,26 +28,26 @@ struct Movement {
 
 #[derive(Debug)]
 struct Path {
-  path: Vec<Movement>,
+  movements: Vec<Movement>,
 }
 
 impl From<Vec<Vec<char>>> for Path {
   fn from(value: Vec<Vec<char>>) -> Self {
-    let mut path = vec![];
+    let mut movements = vec![];
     let mut actual = get_start(&value).unwrap();
-    path.push(actual);
+    movements.push(actual);
 
     loop {
       actual = get_next(&value, &actual);
 
-      path.push(actual);
-
       if actual.point.value == 'S' {
         break;
       }
+
+      movements.push(actual);
     }
 
-    Path { path }
+    Path { movements }
   }
 }
 
@@ -268,35 +266,22 @@ fn get_start(matrix: &Vec<Vec<char>>) -> Option<Movement> {
   None
 }
 
-fn process(input: &str) -> usize {
-  let matrix = input
-    .lines()
-    .map(|line| line.trim().chars().collect::<Vec<char>>())
-    .collect::<Vec<Vec<char>>>();
-  let path = Path::from(matrix.clone());
+fn calc_inside(movements: &Vec<Movement>, len: usize) -> usize {
+  let mut count = 0;
+  let mut matrix_adjusted: Vec<Vec<char>> = vec![vec!['O'; len]; len];
 
-  let mut matrix_adjusted = matrix.clone();
-  for row in 0..matrix_adjusted.len() {
-    for col in 0..matrix_adjusted[row].len() {
-      if let None = path
-        .path
-        .iter()
-        .find(|p| p.point.row == row && p.point.col == col)
-      {
-        matrix_adjusted[row][col] = 'O'
-      }
-    }
+  for movement in movements.iter() {
+    matrix_adjusted[movement.point.row][movement.point.col] = movement.point.value;
   }
 
-  let mut count = 0;
   for row in 0..matrix_adjusted.len() {
+    let mut is_odd_vertical_appears = false;
     for col in 0..matrix_adjusted[row].len() {
+      if let '|' | 'L' | 'J' = matrix_adjusted[row][col] {
+        is_odd_vertical_appears = !is_odd_vertical_appears;
+      }
       if matrix_adjusted[row][col] == 'O' {
-        let how_many_vertical = matrix_adjusted[row][..col]
-          .iter()
-          .filter(|&c| c == &'|' || c == &'L' || c == &'J')
-          .count();
-        if how_many_vertical % 2 == 1 {
+        if is_odd_vertical_appears {
           count += 1;
         }
       }
@@ -306,8 +291,18 @@ fn process(input: &str) -> usize {
   count
 }
 
+fn process(input: &str) -> usize {
+  let matrix = input
+    .lines()
+    .map(|line| line.trim().chars().collect::<Vec<char>>())
+    .collect::<Vec<Vec<char>>>();
+  let path = Path::from(matrix.clone());
+
+  calc_inside(&path.movements, matrix.len())
+}
+
 #[cfg(test)]
-mod test_day10_part01_example {
+mod test_day10_part02_example {
   use super::*;
 
   #[test]
