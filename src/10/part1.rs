@@ -28,26 +28,26 @@ struct Movement {
 
 #[derive(Debug)]
 struct Path {
-  path: Vec<Movement>,
+  movements: Vec<Movement>,
 }
 
 impl From<Vec<Vec<char>>> for Path {
   fn from(value: Vec<Vec<char>>) -> Self {
-    let mut path = vec![];
+    let mut movements = vec![];
     let mut actual = get_start(&value).unwrap();
-    path.push(actual);
+    movements.push(actual);
 
     loop {
       actual = get_next(&value, &actual);
 
-      path.push(actual);
-
       if actual.point.value == 'S' {
         break;
       }
+
+      movements.push(actual);
     }
 
-    Path { path }
+    Path { movements }
   }
 }
 
@@ -272,7 +272,7 @@ fn process(input: &str) -> usize {
     .map(|line| line.trim().chars().collect::<Vec<char>>())
     .collect::<Vec<Vec<char>>>();
   let path = Path::from(matrix);
-  let max_dist = (path.path.len() - 1) / 2;
+  let max_dist = path.movements.len() / 2;
   max_dist
 }
 
