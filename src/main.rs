@@ -28,13 +28,13 @@ fn main() {
   } in solutions
   {
     println!(
-      "Year {BOLD}{YELLOW}{}{RESET} - Day {BOLD}{YELLOW}{}{RESET} - Part {BOLD}{YELLOW}01{RESET} - {BOLD}{GREEN}{} {RESET}",
+      "Year {BOLD}{YELLOW}{}{RESET} - Day {BOLD}{YELLOW}{}{RESET} - Part {BOLD}{YELLOW}01{RESET}  -  {BOLD}{GREEN}{} {RESET}",
       year,
       format!("{:02}", day),
       part1(input)
     );
     println!(
-      "Year {BOLD}{YELLOW}{}{RESET} - Day {BOLD}{YELLOW}{}{RESET} - Part {BOLD}{YELLOW}02{RESET} - {BOLD}{GREEN}{} {RESET}",
+      "Year {BOLD}{YELLOW}{}{RESET} - Day {BOLD}{YELLOW}{}{RESET} - Part {BOLD}{YELLOW}02{RESET}  -  {BOLD}{GREEN}{} {RESET}",
       year,
       format!("{:02}", day),
       part2(input)
