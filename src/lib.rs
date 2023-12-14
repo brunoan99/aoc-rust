@@ -1,125 +1,66 @@
-// --- Day 01 ---
-#[path = "01/part1.rs"]
-pub mod day01part01;
-pub use day01part01::*;
+pub mod utils {
+  pub mod ansi;
+}
 
-#[path = "01/part2.rs"]
-pub mod day01part02;
-pub use day01part02::*;
-
-// --- Day 02 ---
-#[path = "02/part1.rs"]
-pub mod day02part01;
-pub use day02part01::*;
-
-#[path = "02/part2.rs"]
-pub mod day02part02;
-pub use day02part02::*;
-
-// --- Day 03 ---
-#[path = "03/part1.rs"]
-pub mod day03part01;
-pub use day03part01::*;
-
-#[path = "03/part2.rs"]
-pub mod day03part02;
-pub use day03part02::*;
-
-// --- Day 04 ---
-#[path = "04/part1.rs"]
-pub mod day04part01;
-pub use day04part01::*;
-
-#[path = "04/part2.rs"]
-pub mod day04part02;
-pub use day04part02::*;
-
-// --- Day 05 ---
-#[path = "05/part1.rs"]
-pub mod day05part01;
-pub use day05part01::*;
-
-#[path = "05/part2.rs"]
-pub mod day05part02;
-pub use day05part02::*;
-
-// --- Day 06 ---
-#[path = "06/part1.rs"]
-pub mod day06part01;
-pub use day06part01::*;
-
-#[path = "06/part2.rs"]
-pub mod day06part02;
-pub use day06part02::*;
-
-// --- Day 07 ---
-#[path = "07/part1.rs"]
-pub mod day07part01;
-pub use day07part01::*;
-
-#[path = "07/part2.rs"]
-pub mod day07part02;
-pub use day07part02::*;
-
-// --- Day 08 ---
-#[path = "08/part1.rs"]
-pub mod day08part01;
-pub use day08part01::*;
-
-#[path = "08/part2.rs"]
-pub mod day08part02;
-pub use day08part02::*;
-
-// --- Day 09 ---
-#[path = "09/part1.rs"]
-pub mod day09part01;
-pub use day09part01::*;
-
-#[path = "09/part2.rs"]
-pub mod day09part02;
-pub use day09part02::*;
-
-// --- Day 10 ---
-#[path = "10/part1.rs"]
-pub mod day10part01;
-pub use day10part01::*;
-
-#[path = "10/part2.rs"]
-pub mod day10part02;
-pub use day10part02::*;
-
-// --- Day 11 ---
-#[path = "11/part1.rs"]
-pub mod day11part01;
-pub use day11part01::*;
-
-#[path = "11/part2.rs"]
-pub mod day11part02;
-pub use day11part02::*;
-
-// --- Day 12 ---
-#[path = "12/part1.rs"]
-pub mod day12part01;
-pub use day12part01::*;
-
-#[path = "12/part2.rs"]
-pub mod day12part02;
-pub use day12part02::*;
-
-// --- Day 13 ---
-#[path = "13/part1.rs"]
-pub mod day13part01;
-pub use day13part01::*;
-
-#[path = "13/part2.rs"]
-pub mod day13part02;
-pub use day13part02::*;
-
-// --- Day 14 ---
-#[path = "14/part1.rs"]
-pub mod day14part01;
-pub use day14part01::*;
-
-#[path = "14/part2.rs"]
-pub mod day14part02;
-pub use day14part02::*;
+pub mod year2023 {
+  pub mod day01 {
+    pub mod part1;
+    pub mod part2;
+  }
+  pub mod day02 {
+    pub mod part1;
+    pub mod part2;
+  }
+  pub mod day03 {
+    pub mod part1;
+    pub mod part2;
+  }
+  pub mod day04 {
+    pub mod part1;
+    pub mod part2;
+  }
+  pub mod day05 {
+    pub mod part1;
+    pub mod part2;
+  }
+  pub mod day06 {
+    pub mod part1;
+    pub mod part2;
+  }
+  pub mod day07 {
+    pub mod part1;
+    pub mod part2;
+  }
+  pub mod day08 {
+    pub mod part1;
+    pub mod part2;
+  }
+  pub mod day09 {
+    pub mod part1;
+    pub mod part2;
+  }
+  pub mod day10 {
+    pub mod part1;
+    pub mod part2;
+  }
+  pub mod day11 {
+    pub mod part1;
+    pub mod part2;
+  }
+  pub mod day12 {
+    pub mod part1;
+    pub mod part2;
+  }
+  pub mod day13 {
+    pub mod part1;
+    pub mod part2;
+  }
+  pub mod day14 {
+    pub mod part1;
+    pub mod part2;
+  }
+  pub mod day15 {
+    pub mod part1;
+    pub mod part2;
+  }
+}
