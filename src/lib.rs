@@ -114,3 +114,12 @@ pub use day13part01::*;
 #[path = "13/part2.rs"]
 pub mod day13part02;
 pub use day13part02::*;
+
+// --- Day 14 ---
+#[path = "14/part1.rs"]
+pub mod day14part01;
+pub use day14part01::*;
+
+#[path = "14/part2.rs"]
+pub mod day14part02;
+pub use day14part02::*;
