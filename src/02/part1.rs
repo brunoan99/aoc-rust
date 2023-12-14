@@ -1,7 +1,7 @@
 use std::{iter::Sum, str::FromStr};
 
 pub fn exec() -> () {
-  let input = include_str!("input1.txt");
+  let input = include_str!("input.txt");
   let output = process(input);
   println!("Day 02 - Part 01 - {output}");
 }
