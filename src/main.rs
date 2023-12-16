@@ -13,7 +13,7 @@ fn main() {
     None => (None, None),
   };
 
-  let solutions: Vec<_> = std::iter::empty()
+  let solutions: Vec<Solution> = std::iter::empty()
     .chain(year2023())
     .filter(|solution| year == Some(solution.year) || year.is_none())
     .filter(|solution| day == Some(solution.day) || day.is_none())
@@ -101,5 +101,6 @@ fn year2023() -> Vec<Solution> {
     solution!(year2023, day13),
     solution!(year2023, day14),
     solution!(year2023, day15),
+    solution!(year2023, day16),
   ]
 }

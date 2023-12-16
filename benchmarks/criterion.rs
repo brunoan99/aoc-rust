@@ -60,6 +60,7 @@ fn year2023() -> Vec<Benchmark> {
     benchmark!(year2023, day13),
     benchmark!(year2023, day14),
     benchmark!(year2023, day15),
+    benchmark!(year2023, day16),
   ]
 }
 
@@ -71,17 +72,16 @@ fn process_benchark(b: Benchmark, c: &mut Criterion) {
   group.bench_function(&format!("{}-part2", b.day), |bencher| {
     bencher.iter(|| (b.part2)()(black_box(b.input)))
   });
+  group.finish()
 }
 
-fn bench_all(c: &mut Criterion) {
-  let benches = std::iter::empty()
-    .chain(year2023())
-    .collect::<Vec<Benchmark>>();
+fn bench(c: &mut Criterion) {
+  let benchmarks: Vec<Benchmark> = std::iter::empty().chain(year2023()).collect();
 
-  for benchmark in benches {
+  for benchmark in benchmarks {
     process_benchark(benchmark, c);
   }
 }
 
-criterion_group!(benches, bench_all);
+criterion_group!(benches, bench);
 criterion_main!(benches);
