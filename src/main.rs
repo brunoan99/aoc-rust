@@ -67,10 +67,11 @@ macro_rules! solution {
         .parse::<u8>()
         .unwrap(),
       input: include_str!(concat![
+        "../aoc-inputs/",
         stringify!($year),
         "/",
         stringify!($day),
-        "/input.txt"
+        "_input.txt"
       ]),
       part1: |input: &str| {
         use $year::$day::part1::exec;
