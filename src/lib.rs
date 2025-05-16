@@ -1,70 +1,23 @@
 pub mod utils {
   pub mod ansi;
 }
-
-pub mod year2023 {
-  pub mod day01 {
-    pub mod part1;
-    pub mod part2;
-  }
-  pub mod day02 {
-    pub mod part1;
-    pub mod part2;
-  }
-  pub mod day03 {
-    pub mod part1;
-    pub mod part2;
-  }
-  pub mod day04 {
-    pub mod part1;
-    pub mod part2;
-  }
-  pub mod day05 {
-    pub mod part1;
-    pub mod part2;
-  }
-  pub mod day06 {
-    pub mod part1;
-    pub mod part2;
-  }
-  pub mod day07 {
-    pub mod part1;
-    pub mod part2;
-  }
-  pub mod day08 {
-    pub mod part1;
-    pub mod part2;
-  }
-  pub mod day09 {
-    pub mod part1;
-    pub mod part2;
-  }
-  pub mod day10 {
-    pub mod part1;
-    pub mod part2;
-  }
-  pub mod day11 {
-    pub mod part1;
-    pub mod part2;
-  }
-  pub mod day12 {
-    pub mod part1;
-    pub mod part2;
-  }
-  pub mod day13 {
-    pub mod part1;
-    pub mod part2;
-  }
-  pub mod day14 {
-    pub mod part1;
-    pub mod part2;
-  }
-  pub mod day15 {
-    pub mod part1;
-    pub mod part2;
-  }
-  pub mod day16 {
-    pub mod part1;
-    pub mod part2;
-  }
+macro_rules! module {
+    ($year:ident, [$( $day:ident ),*]) => {
+        pub mod $year {
+            $(
+                pub mod $day {
+                    pub mod part1;
+                    pub mod part2;
+                }
+            )*
+        }
+    };
 }
+
+module!(
+  year2023,
+  [
+    day01, day02, day03, day04, day05, day06, day07, day08, day09, day10, day11, day12, day13,
+    day14, day15, day16
+  ]
+);
